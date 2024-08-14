@@ -1,0 +1,17 @@
+{
+  "name": "4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eko Gustiana",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.12.0",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  }
+}
