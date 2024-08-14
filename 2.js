@@ -31,3 +31,4 @@ const hitungVoucher = (voucherDiskon, uangBelanja) => {
 };
 
 hitungVoucher("DumbWaysJos", 100_000);
+hitungVoucher("DumbWaysMantap", 100_000);
