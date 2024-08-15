@@ -114,6 +114,46 @@ const createHero = async (req, res) => {
   }
 };
 
+const typeList = async (req, res) => {
+  try {
+    const fecthListquery = `select * from "Types" 
+    order by "Types".id ASC`;
+
+    const fetchList = await sequelize.query(fecthListquery);
+
+    const isLogin = req.session.isLogin;
+
+    const typesObjandIsLogin = fetchList[0].map((type) => {
+      return {
+        ...type,
+        isLogin,
+      };
+    });
+
+    res.render("typeList", {
+      data: typesObjandIsLogin,
+      isLogin: isLogin,
+      user: req.session.user,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const createType = async (req, res) => {
+  try {
+    const { title } = req.body;
+    const insertTypeQuery = `insert into "Types" (name, "createdAt", "updatedAt")
+                                values ('${title}', 'now()', 'now()')`;
+
+    await sequelize.query(insertTypeQuery);
+
+    res.redirect("/typeList");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const renderHeroDetail = async (req, res) => {
   try {
     const id = req.params.heroId;
@@ -134,6 +174,120 @@ const renderHeroDetail = async (req, res) => {
       isLogin: req.session.isLogin,
       user: req.session.user,
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteHero = async (req, res) => {
+  try {
+    const { heroId } = req.params;
+    const deleteQuery = `delete from "Heroes" where id = ${heroId}`;
+
+    await sequelize.query(deleteQuery);
+
+    res.redirect("/home");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteType = async (req, res) => {
+  try {
+    const { typeId } = req.params;
+    const deleteQuery = `delete from "Types" where id = ${typeId}`;
+
+    await sequelize.query(deleteQuery);
+
+    res.redirect("/typeList");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const renderFormEditHero = async (req, res) => {
+  try {
+    const id = req.params.heroId;
+
+    const heroById = await sequelize.query(
+      `
+    select 
+    h.*, t."name" as "Type"
+    from "Heroes" h 
+    join "Types" t 
+    on h."TypeId" = t.id
+    where h.id=${id}
+    `
+    );
+
+    res.render("editHero", {
+      data: heroById[0][0],
+      isLogin: req.session.isLogin,
+      user: req.session.user,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const renderFormEditType = async (req, res) => {
+  try {
+    const id = req.params.typeId;
+
+    const typeById = await sequelize.query(`
+            select * from "Types" t where t.id = ${id}`);
+
+    res.render("editType", {
+      data: typeById[0][0],
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const editHero = async (req, res) => {
+  try {
+    const id = req.params.heroId;
+
+    const editedHero = {
+      name: req.body.title,
+      type: req.body.heroType,
+    };
+
+    const editHeroQuery = `
+        update "Heroes"
+        set
+        "name" = '${editedHero.name}',
+        "TypeId" = '${editedHero.type}'
+        where id = '${id}'
+    `;
+
+    await sequelize.query(editHeroQuery);
+
+    res.redirect("/home");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const editType = async (req, res) => {
+  try {
+    const id = req.params.typeId;
+
+    const editedType = {
+      name: req.body.title,
+    };
+
+    const editTypeQuery = `
+          update "Types"
+          set
+          "name" = '${editedType.name}'
+          where id = '${id}'
+        `;
+
+    await sequelize.query(editTypeQuery);
+
+    res.redirect("/typeList");
   } catch (err) {
     console.log(err);
   }
@@ -228,14 +382,22 @@ const logout = async (req, res) => {
 app.get("/", renderHome);
 app.get("/home", renderHome);
 app.get("/hero", renderFormHero);
+app.get("/typeList", typeList);
 app.post("/hero", upload.single("image"), createHero);
 app.get("/type", renderFormType);
+app.post("/type", createType);
 app.get("/register", renderFormRegister);
 app.post("/register", registerUser);
 app.get("/login", renderFormLogin);
 app.post("/login", login);
 app.get("/logout", logout);
 app.get("/heroDetail/:heroId", renderHeroDetail);
+app.get("/editHero/:heroId", renderFormEditHero);
+app.post("/editHero/:heroId", editHero);
+app.get("/editType/:typeId", renderFormEditType);
+app.post("/editType/:typeId", editType);
+app.get("/deleteHero/:heroId", deleteHero);
+app.get("/deleteType/:typeId", deleteType);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
