@@ -77,14 +77,28 @@
 
     <!-- end navbar -->
 
+    {{#if messages.danger}}
+      <div class="alert alert-danger" role="alert">
+        <div class="container">
+          {{messages.danger}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if messages.success}}
+      <div class="alert alert-success" role="alert">
+        <div class="container">
+          {{messages.success}}
+        </div>
+      </div>
+    {{/if}}
+
     <!-- form -->
 
     <form
       style="display: flex; flex-direction: column; align-items: center"
-      class="formTest"
-      action="/project"
+      action="/login"
       method="post"
-      enctype="multipart/form-data"
     >
       <h1 class="text-center mt-5 mb-5">LOGIN TO YOUR ACCOUNT</h1>
 
@@ -103,7 +117,7 @@
         <div class="mb-5">
           <label for="password" class="form-label">Password</label>
           <input
-            type="text"
+            type="password"
             class="form-control"
             id="password"
             name="password"
