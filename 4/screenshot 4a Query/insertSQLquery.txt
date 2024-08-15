@@ -1,0 +1,21 @@
+insert into "Users" (username, email, "password", "createdAt", "updatedAt")
+values
+	('Morgan', 'morgan@mail.com', '12345', 'now()', 'now()'),
+	('Miki', 'miki@mail.com', '12345', 'now()', 'now()'),
+	('Mika', 'mika@mail.com', '12345', 'now()', 'now()'),
+	('Michiko', 'michiko@mail.com', '12345', 'now()', 'now()')
+	
+	
+insert into "Types" ("name", "createdAt", "updatedAt")
+values
+	('Strength', 'now()', 'now()'),
+	('HP',  'now()', 'now()'),
+	('Agility',  'now()', 'now()')
+
+
+insert into "Heroes" (name, photo, "UserId", "TypeId" ,"createdAt", "updatedAt")
+values
+	('Jett', 'photo.jgp', 1, 1,'now()', 'now()'),
+	('Jitt', 'photo.jpg', 2, 2,'now()', 'now()'),
+	('Jott', 'photo.jpg', 3, 3,'now()', 'now()'),
+	('Jatt', 'photo.jpg', 4, 3,'now()', 'now()')

@@ -1,0 +1,28 @@
+//4a tampilkan seluruh data heroes beserta types dari heroes tersebut
+
+select 
+h.*, t."name" as "Type"
+from "Heroes" h 
+join "Types" t 
+on h."TypeId" = t.id
+
+
+//4a tampilkan seluruh data heroes berdasarkan type tertentu
+
+select * from "Heroes" h 
+where "TypeId" = 1 
+
+select * from "Heroes" h 
+where "TypeId" = 2 
+
+select * from "Heroes" h 
+where "TypeId" = 3 
+
+
+
+//4a tampilkan spesifik data heroes dengan type nya
+
+select h.name, h."photo", h."UserId" , h."TypeId" , h."createdAt" , h."updatedAt", t."name" as "Type"
+from "Heroes" h 
+join "Types" t 
+on h."TypeId" = t.id
