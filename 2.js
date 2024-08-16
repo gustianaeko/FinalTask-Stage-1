@@ -27,8 +27,10 @@ const hitungVoucher = (voucherDiskon, uangBelanja) => {
     Kembalian : ${kembalian}
 ======================================
     `);
+  } else {
+    console.log(`Voucher yang anda masukan tidak ada`);
   }
 };
 
-hitungVoucher("DumbWaysJos", 100_000);
-hitungVoucher("DumbWaysMantap", 100_000);
+hitungVoucher("DumbWays", 100_000);
+// hitungVoucher("DumbWaysMantap", 100_000);
