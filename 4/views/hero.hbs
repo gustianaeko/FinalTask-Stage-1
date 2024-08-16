@@ -103,13 +103,12 @@
 
         <div class="mb-3">
           <label for="heroType" class="form-label">Hero Type</label>
-          <input
-            type="number"
-            class="form-control"
-            id="heroType"
-            name="heroType"
-            required
-          />
+          <select class="form-control" id="heroType" name="heroType">
+            <option value="" disabled selected>Select a Hero Type</option>
+            {{#each data}}
+              <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
         </div>
 
         <!-- uploadImg -->

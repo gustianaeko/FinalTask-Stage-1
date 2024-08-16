@@ -89,7 +89,12 @@ const renderHome = async (req, res) => {
 
 const renderFormHero = async (req, res) => {
   try {
+    const fetchTypeListQuery = `select * from "Types"`;
+
+    const fetchTypeList = await sequelize.query(fetchTypeListQuery);
+
     await res.render("hero", {
+      data: [...fetchTypeList[0]],
       isLogin: req.session.isLogin,
       user: req.session.user,
     });
